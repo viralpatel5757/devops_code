@@ -1,0 +1,65 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: deploy-history
+  labels:
+    audit: true1
+    tier: middleware
+  
+spec:
+  
+  capacity:
+    storage: 2Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Recycle
+  storageClassName: default
+  hostPath:
+    path: /tmp/deployment
+---
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: persistent-data
+  labels:
+    
+    tier: middleware
+  annotations:
+    audit: true1 
+  
+spec:
+  
+  capacity:
+    storage: 2Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Recycle
+  storageClassName: persistent 
+  hostPath:
+    path: /tmp/persistent
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: my-personal-data
+  labels:
+    security: high
+    type: pii
+    audit: true1
+  
+spec:
+  
+  capacity:
+    storage: 2Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Recycle
+  storageClassName: persistent 
+  hostPath:
+    path: /tmp/pii
+

@@ -1,0 +1,86 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: nginx05 
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      name: nginx05 
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          name: httpd05
+          
+    - podSelector:
+        matchLabels:
+          name: redis05
+
+ 
+  egress:
+  - to:
+    - podSelector:
+        matchLabels:
+          name: httpd05
+          
+    - podSelector:
+        matchLabels:
+          name: redis05
+ 
+---
+
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: httpd05 
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      name: httpd05 
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          name: nginx05
+     
+  egress:
+  - to:
+    - podSelector:
+        matchLabels:
+          name: nginx05 
+   
+
+---
+
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: redis05 
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      name: redis05 
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          name: nginx05
+  
+  egress:
+  - to:
+    - podSelector:
+        matchLabels:
+          name: nginx05 
+     

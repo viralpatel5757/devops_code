@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: congig-pod
+spec:
+   containers:
+   - name: Pod 
+     image: nginx
+     volumeMounts:
+      - name: config-volume
+        mountPath: /etc/config
+   volumes:      
+    - name: config-volume
+      configMap:
+        # Provide the name of the ConfigMap containing the files you want
+        # to add to the container
+        name: special-config
+

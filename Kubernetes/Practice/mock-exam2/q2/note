@@ -1,0 +1,2 @@
+$ k taint node node01 app_type=alpha:NoSchedule
+$ k run alpha --image=redis --dry-run=client -o yaml > pod2.yaml

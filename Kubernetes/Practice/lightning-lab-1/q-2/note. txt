@@ -1,0 +1,11 @@
+web-app pod is  not able to talk with secure-pod. we have to fix this.
+
+$ k get networkpolicy
+
+you will see that default n/w policy doesnt allow any ingress meaning no talking b/w pods.
+so this question is about network policy. 
+so we need to modify n/w policy in a way that it allows traffic from web-app pod to secure-pod
+
+How to test for it ....
+$ k exec -it webapp-color -- sh 
+$ nc -z -v -w 1 secure-service 80  : to see if secure service is open on port 80 or not

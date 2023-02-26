@@ -1,0 +1,130 @@
+$ k get ns 
+$ k get pod -A 
+$ k get pod -n apple
+$ k get svc -n apple
+$ k run nginx --image=nginx
+$ k get pod nginx -o yaml --export > pod.yaml
+$ k get pod nginx -o wide 
+$ k describe pod nginx
+$ k delete pod nginx --force --grace-periode=0
+$ k run nginx --image=nginx:1.17.4 --port=80
+$ k set image pod nginx nginx=nginx:1.15-alpine
+$ k set image pod nginx nginx:nginx:1.17.1
+$ k get pod nginx -o wide
+$ k run nginx --image=nginx --restart=never 
+$ k exec -it nginx /bin/sh
+$ k get pod nginx -o wide
+$ k run busybox --image=busybox -- /bin/sh -c ls
+$ k logs busybox
+$ k logs busybox --previous
+$ k run busybox --image=busybox -- /bin/sh -c "slepp 3600"
+$ k exec -it busybox /bin/sh
+ # wget -o- <ip_address of nginx pod>
+$ k run busybox -it --rm --image=busybox -- echo "how are you"
+$ k get pod -o custom-colums="POD_NAME:.metadata.name,POD_STATUS:.status.containerStatuses[].state"
+$ k get pods --sort-by=.metadata.name
+$ k get pods --sort-by=.metadata.creationTimestamp
+$ k logs busybox -c busybox1
+$ k logs busybox -c busybox2 -p
+$ k exec -it busybox -c busybox3 -- /bin/sh -c ls 
+$ k top pod busybox --containers > file.log
+$ k exec -it  multi-cont-pod -c main-container -- sh
+$ cat /var/log/main.txt
+$ k exec -it  multi-cont-pod -c sidecar -- sh
+$ apt-get update && apt-get install -y curl
+$ curl localhost
+$ k get pods --show-labels
+$ k run nginx1 --image=nginx --labels=env=prod
+$ k get pod -l env=dev
+$ k get pods -L env
+$ k get pods -l 'env in (dev,prod)' --show-labels
+$ k label pod prod1 env=uat --overwrite
+$ k label pod prod{1..3} env-
+$ k label pod prod{1..7} app=nginx
+$ k get nodes --show-labels
+$ k label node node1 nodeName=nginxnode
+$ k run pod pod1 --image=nginx --dry-run -o yaml > pod1.yaml 
+$ k get pod nginx --show-labels
+$ k annotate pod nginx{1..89} name=webapp
+$ k describe pod nginx{1..89} | grep -i annotations
+$ k annotate pod nginx{1..89} name-
+$ k delete pod --all
+$ k create deploy webapp  --image=nginx --replicas=5
+$ k get deploy webapp --show-labels
+$ k get deploy webapp -o yaml
+$ k get pod -l app=webapp
+$ k scale deploy webapp --replicas=20
+$ k rollout status deploy webapp
+$ k get rs -l app=webapp
+$ k get pods -l app=webapp -o yaml
+$ k delete deploy webapp 
+$ k create deploy webapp --image=nginx:1.17.1 --port=80
+$ k set image deploy webapp nginx=nginx:1.17.4
+$ k describe deploy webapp | grep Image
+$ k rollout history deploy webapp
+$ k rollout undo deploy webapp
+$ k set image deploy webapp nginx=nginx:1.16.1
+$ k rollout undo deploy webapp --to-revision=3
+$ k set image deploy webapp nginx=nginx:1.100
+$ k rollout undo deploy webapp
+$ k rollout history deploy webapp --revision=7
+$ k rollout pause deploy webapp
+$ k set image deploy webapp nginx=nginx:latest
+$ k rollout resume deploy webapp
+$ k autoscale deploy webapp --min=10 --max=20 --cpu-percent=85
+$ k get hpa
+$ k get pod  -l app=webapp
+$ k delete deploy webapp
+$ k delete hpa webapp
+$ k create job node --image=node -- node -v
+$ k logs <pod name>
+$ k create job hello-job --image=busybox -- echo "hello i am from job!" -o yaml --dry-run > hell-job.yaml
+$ k get jobs
+$ k get pods
+$ k delete job hello-job
+$ k get job  -w
+$ k delete job hello-job
+$ k create cj hello --image=busybox --schedule="*/1 * * * *" -- bin/sh -c "date; echo hello from kubernetes cluster"
+$ k get job,pod
+$ k delete cj hello
+$ k get pv,pvc
+$ k delete pv/pvc <name of pv/pvc>
+$ k exec -it redis -- sh 
+$ cd /data/redis
+$ echo "This is called the file" > file.txt
+$ cat /data/redis/file.txt
+$ k run nginx --image=nginx --port=80 $do > pod.yaml
+$ k get cm
+$ k create cm myconfigmap --from-literal=appname=myapp
+$ k describe cm myconfigmap
+$ k delete cm myconfigmap
+$ k create cm keyvalcfgmap  --from-file=config.txt
+$ k exec -it nginx -- env 
+$ k create cm envcfgmap --from-env-file=file.env
+$ k create cm cfgvolume  --from-literal=var1=val1 --from-literal=var2=val2
+$ k exec -it secbusybox -- sh
+$ id
+$ k top pods
+$ k run nginx --image=nginx --limits=memory=200gi,cpu=100m --request=memory=100gi,cpu=50m
+$ k create secret generic mysecret --from-literal=user=myuser --from-literal=password=mypassword
+$ k get secret -A
+$ k get secret mysecret -o yaml
+$ k get sa -A
+$ k create sa admin -o yaml
+$ k run busybox --image=busybox -- /bin/sh -c "sleep 3600" $do > pod.yaml
+$ do="--dry-run=client -o yaml"
+$ k run nginx --image=nginx --port=80 
+$ k explain pod.spec.containers.livenessProbe
+$ k run busybox --image=busybox -- /bin/sh -c "echo I am from busybox pod; sleep 3600;"
+$ k logs busybox >  busybox-logs.txt
+$ k get events --sort-by=.metadata.creationTimestamp > file.log
+$ k run alpine --image=alpine -- /bin/sh -c "while true; do echo ‘Hi I am from alpine’; sleep 5; done"
+$ k logs alpine -f
+$ kubectl top pod --all-namespaces | sort --reverse --key 3 --numeric | head -3 > cpu-usage.txt
+$ K RUN NGINX --IMAGE=NGINX -l app=my-nginx --port=80 -o yaml
+$ k expose pod nginx --port=80 --target-port=9376 --type=NodePort
+$ k get pod nginx --show-labels
+$ k run busybox --image=busybox
+$ k get svc nginx -o wide
+$ k exec -it busybox -- sh
+$ wget -o- <IP>:80

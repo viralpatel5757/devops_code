@@ -1,0 +1,59 @@
+$ k create ns ckad-prep
+$ k run mypod --image=nginx:2.3.5 -n ckad-prep
+$ k describe pod mypod -n ckad-prep
+$ k set image pod mypod nginx=nginx:1.15.12
+$ k get pod -n ckad
+$ k exec -it mypod -- ls > log.txt
+k get pod mypod -o wide
+$ k run tmp --image=busybox -- wget -o- -n ckad-prep <ip>:80 
+$ k logs mypod
+$ k create cm db-configmap --from-env-file=config.txt
+$ k exec -it db-configmap -- env 
+$ k create secret generic db-credentials --from-literal=db-password=passwd
+$ k exec -it secured -- /bin/sh
+$ cd  /data/app
+$ touch logs.txt
+$ ls -l >  logs.txt
+$ k create quota apps  -n rq-demo --hard=cpu=2,memory=500m,pods=2
+$ k run pod1 --image=nginx --limits=cpu=0,memory=0 --requests=cpu=5,memory=1G
+$ k set resource pod pod1  --requests=cpu=2,memory=500m
+$ k config set-contexts --current --namespace=rq-demo
+$ k create sa backend-team -o yaml
+$ k exec -it adapter -c transformer -- sh
+$ cat /var/logs/diskspace.txt
+$ k exec -it hello -- sh
+$ curl localhost:3000 
+$ k logs pod hello > log.txt
+$ k get pods --show-labels
+$ k get pods -l 'team in (shiny,legacy)',env=prod
+$ k label pod backend env-
+$ k get pods -o yaml | grep -C 3 'annotations:'
+
+$ k create deploy deploy --replicas=3 --image=nginx --label=tier=backend $do > deploy.yaml
+$ k set image deploy deploy nginx=nginx:latest
+$ k scale deploy deploy --replicas=5 
+$ k rollout history deploy deploy
+$ k rollout undo deploy deploy --to-revision=1 
+$ k get deploy -o wide
+
+$ k create cj current-date --image=nginx --schedule='*/1 * * * *' -- echo "Current date: $(date)"
+$ k get jobs -w 
+$ k get pod -l run=current-date
+
+$ k create deploy myapp --replicas=2 --image=nginx --port=80
+$ k expose pod nginx --port=80 --traget-port=80
+$ k get pod nginx -o wide
+$ k run tmp --image=busybox 
+$ k exec -it tmp -- /bin/sh  
+$ wget -o-  clusterIP:80
+
+$ k create ns app-stack
+$ k apply -f app-stack.yaml
+
+
+
+
+
+
+
+

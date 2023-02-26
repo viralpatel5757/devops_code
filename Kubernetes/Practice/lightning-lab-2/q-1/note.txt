@@ -1,0 +1,5 @@
+question is about readyness and liveness prob of the pod.
+
+
+$ k get pods -A
+$ k -n dev1401 get pod nginx1401 -o yaml > pod.yaml

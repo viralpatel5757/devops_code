@@ -1,0 +1,2 @@
+$ k create deployment my-webapp --image=nginx --replicas=2 --labels='tier=frontend' --dry-run=client -o yaml > deploy.yaml
+$ k expose deployment my-webapp --port=80 --type=NodePort --name=front-end-service --dry-run=client -o yaml > svc.yaml

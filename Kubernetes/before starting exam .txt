@@ -1,0 +1,23 @@
+> alias k=kubectl
+> alias kn='kubectl config set-context --current --namespace '
+
+> export do="--dry-run=client -o yaml"
+> k run pod1 --imgae=x $do > pod1.yaml
+
+> kubectl run X --image=X --restart=Never --dry-run=client -o yaml > q1.yaml
+> k get pod pod1 -o yaml --export > pod1.yaml  ## it will neget all the unnecessary things and creates yaml
+> kubectl explain cronjob.spec.jobtemplete --recursive
+> kubectl expose -h | grep "#" -A2
+----------------------------------------------------------------------------------------------------------------
+important tips
+
+> when exam starts go to kubernetes cheatsheet and copy-paste first 4 cmds.
+> when you search the kube-docs on kubernetes.io page make sure to search for the >task> link which will give you live examples 
+> if question takes more than 5 minutes and is of just 2 points, keep it for the last
+-----------------------------------------------------------------------------------------------------------------
+Ultimate cmd.
+
+$ kubectl run nginx --image=nginx --restart=Never --port=80 --namespace=myname --command --serviceaccount=mysa1 
+  --env=HOSTNAME=local --labels=bu=finance,env=dev  --requests='cpu=100m,memory=256Mi' --limits='cpu=200m,memory=512Mi' 
+  --dry-run=client -o yaml -- /bin/sh -c 'echo hello world' 
+

@@ -1,0 +1,16 @@
+$ alias k=kubectl
+$ do="--dry-run=client -o yaml"
+$ k get deploy project-23-api -n pluto -o yaml > deploy.yaml
+$ k run tmp --image=nginx:alpine --rm -- curl <IP> 
+$ k exec busybox-tmp -- wget -o- <ip>
+
+$ k create deploy sunny --image=nginx:1.17.3-alpine --replicas=4 -n sun --serviceaccount=sa-sun-deploy  
+$ k expose deploy sunny -n sunny --name=sun-srv --port=9999 --type=ClusterIP --taregt-port=80
+$ echo "k get pods -n sun -o wide" > /opt/course/p2/sunny_status_command.sh
+$ sh /opt/course/p2/sunny_status_command.sh
+$ k config set-contexts --current --namespace=sunny
+$ k run tmp --image=nginx:alpine --rm -- curl sun-svc.sun:9999
+
+$ k get svc -n earth
+$ k get all -n earth
+$ k get ep -n earth

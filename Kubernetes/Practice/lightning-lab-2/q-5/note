@@ -1,0 +1,4 @@
+redirect the logs from containr log-x to /opt/dind.txt on master node
+
+$ k logs <pod-name> -c log-x | grep WARN > /opt/dind-878516.txt
+ 

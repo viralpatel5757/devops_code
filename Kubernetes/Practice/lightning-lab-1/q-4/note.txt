@@ -1,0 +1,8 @@
+to update image from 1.16 to 1.17
+$ k set image deployment/nginx-deploy nginx=nginx:1.17
+
+to check the history
+$ k rollout history deployment nginx-deploy
+
+to revert the chages
+$ k rollout undo deployment nginx-deploy

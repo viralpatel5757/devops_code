@@ -1,0 +1,172 @@
+kind: Pod
+metadata:
+  name: configmap-demo-pod
+spec:
+  securityContext:
+    runAsUser: 1001
+  containers:
+    - name: demo
+      image: alpine
+      command: ["date -s '01JAN 2020 10:00:00"]
+      env:
+        - name: CM 
+          valueFrom:
+            configMapKeyRef:
+              name: cm1           
+              key: COLOR 
+      securityContext:
+       capabilities:
+        add: [ "SYS_TIME"]        
+
+      envFrom:
+      - configMapRef:
+          name: special-config  
+
+      livenessProbe:
+       exec:
+        command:
+        - cat
+        - /tmp/debug 
+       httpGet:
+        path: localhost
+        port: 80 
+       tcpSocket:
+        port: 80 
+       initialDelaySeconds: 30
+       periodSeconds: 10 
+
+      readinessProbe:
+       exec:
+        command:
+        - cat
+        - /tmp/debug   
+
+  nodeSelector:
+    nodeName: node01         
+
+  tolerations:
+  - key: "mode"
+    value: "maintainance"
+    operator: "Exists"
+    effect: "NoSchedule"  
+
+---
+  
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod1
+spec:
+
+  affinity:
+    podAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchExpressions:
+          - key: name
+            operator: In
+            values:
+            - pod1
+        topologyKey: topology.kubernetes.io/zone
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+            - key: security
+              operator: In
+              values:
+              - S2
+          topologyKey: topology.kubernetes.io/zone
+
+
+  containers:
+  -  name: pod1    
+     image: busybox
+     volumeMounts:
+      - name: vol
+        mountPath: /tmp/deployment 
+  volumes:
+  - name: vol
+    persistentVolumeClaim:
+      claimName: myclaim  
+      
+---
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx05
+spec: 
+  containers:
+  -  name: nginx05    
+     image: nginx
+  - name:  debug 
+    image: busybox  
+
+---
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: redis05
+spec: 
+  containers:
+  -  name: redis05    
+     image: redis
+  - name:  debug 
+    image: busybox     
+
+---   
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: httpd05 
+spec: 
+  containers:
+  -  name: httpd05   
+     image: httpd 
+  - name:  debug 
+    image: busybox   
+
+---
+
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: calculus  
+spec: 
+  containers:
+   
+  - name:  busybox  
+    image: busybox
+    args: ['sh','-c','i=0; while true; do a=$(( i*i+i )); echo $a; i=$(( i+1 )); done']
+
+---
+
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: frontend
+  labels:
+    app: guestbook
+    tier: frontend
+    name: calculus
+spec:
+  # modify replicas according to your case
+  replicas: 3
+  selector:
+    matchLabels:
+      name: calculus
+  template:
+    metadata:
+      labels:
+        name: calculus
+    spec:
+      containers:
+      - name:  busybox  
+        image: busybox
+        args: ['sh','-c','i=0; while true; do a=$(( i*i+i )); echo $a; i=$(( i+1 )); done']

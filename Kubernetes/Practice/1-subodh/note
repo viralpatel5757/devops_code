@@ -1,0 +1,16 @@
+$ k create deploy deploy1 --image=nginx --replicas=3 --port=80 -- /bin/sh -c sleep 3600 -l app=nginx | k edit -f -
+$ k create cm cm1 --from-literal=key=value --from-env-file=env.txt
+$ k create secret generic sg1 --from-literal=key=value
+$ k create service clusterip svc2 --tcp=9090:8080
+$ k create svc nodeport svc3 --tcp=99:88 --node-port:90000
+$ k expose deploy deploy1 --name=svc1 --port=8080 --target-port=9090 --protocol=TCP
+$ k create job job1 --image=nginx -- /bin/sh -c sleep 3600
+$ k label pod pod1 key=value app=nginx run=busybox --overwrite
+$ k label pod pod1 key- app-
+$ k get pod --show-labels
+$ k set env pod pod1 key=value --overwrite
+$ k set env pod pod1 key-
+$ k set env deploy deploy1 --container=busybox env=busybox
+$ k taint node node01 key=value:NoSchedule
+
+

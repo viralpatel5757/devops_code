@@ -1,0 +1,8 @@
+$ k run cache --image=redis:3.2 -n web --port=6379 
+$ k create secret generic another-secret --from-literal=key1=value4
+$ k nginx-secret --image=nginx $do > pod2.yaml
+$ k nginx-resource -n pod-resource --image=nginx --request='cpu=200m,memory=1Gi'
+$ k create cm another-config --from-literal=key4=value3
+
+
+

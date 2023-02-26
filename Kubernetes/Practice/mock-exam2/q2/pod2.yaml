@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: alpha
+  labels:
+    env: test
+spec:
+  containers:
+  - name: redis
+    image: redis
+    imagePullPolicy: IfNotPresent
+  tolerations:
+  - key: "app_type"
+    value: "alpha"
+    operator: "Equal"
+    effect: "NoSchedule"

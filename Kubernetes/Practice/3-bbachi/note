@@ -1,0 +1,55 @@
+$ k get ns 
+$ k get pods -A
+$ k get po -n <>
+$ k get svc -A
+$ k run nginx --image=nginx --dry-run=client -o yaml > pod.yaml 
+$ k apply -f pod.yaml
+$ k get pod nginx  -o yaml
+$ k get pod nginx -o yaml --export
+$ k delet pod nginx --grace-period=0 --force
+$ k set image pod nginx nginx=nginx:1.15-alpine
+$ k run busybox --image=busybox -- /bin/sh -c "sleep 3600"
+$ k exec -it busybox -- sh
+$ wget -o- <ip of nginx>
+$ k run busybox --image=busybox --rm -- echo "hohbgjsw"
+$ k get pod nginx --v=7
+$ k get pod nginx -o custom-colums=POD_NAME:.metadata.name,POD_STATUS:.status.containerStatuses[].state
+$ k get pods --sort-by=.metadata.name
+$ k get pod --sort-by=.metadata.creationTimestamp
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

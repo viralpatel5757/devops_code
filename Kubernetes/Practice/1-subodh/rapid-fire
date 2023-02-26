@@ -1,0 +1,40 @@
+$ k run pod1 --image=nginx
+$ k run redis --image=redis:1.99
+$ k describe pod redis
+$ k set image pod redis redis=redis
+$ k create rs rs-1 --image=nginx -l tier=frontend --replicas=3 $do > rs.yaml
+$ k scale rs rs-1 --replicas=5
+$ k set image rs rs-1 nginx=nginx:alpine
+$ k scale rs rs-1 --replicas=2
+$ k create deploy deploy-1 --image=busybox --replicas=3 -- sleep 3600
+$ k set image deploy deploy-1 busybox=ubuntu
+$ k create ns finance 
+$ k run redis01 --image=redis -n finance
+$ k run redis02 --image= redis:alpine --label=tier=db
+$ k expose deploy redis02 --name=redis-service --port=6379
+$ k run custom-nginx --image=nginx --port=8080
+$ k run httpd --image=httpd:alpine  | $ k create svc clusterip httpd --port=80 --tcp=80:80
+$ k pod1 --image=ubuntu -- sleep 5000
+$ k create cm cm1 COLOR=blue
+$ k create deploy nginx01 --image=nginx -- env=CREATED_BY=octocat
+$ k describe delploy nginx01 
+$ k create cm db-config --from-literal=db-host=localhost.example.com --from-literal=db-port=3306 --from-literal=db-name=kubernetes-objects
+$ k create deploy ubuntu01 --image=ubuntu --replicas=2 $do > deploy.yaml
+$ k create deploy multi-con-01 --image=nginx $do > deploy.yaml
+$ k create secrete generic  db-creds --from-literal=db_user=root --from-literaldb_password=pass404 --from-literaldb_role=admin
+$ k run ubuntu02 --image=ubuntu -- sleep 3400 $do > pod.yaml
+$ k run ubuntu03  --image=ubuntu 
+$ k taint nede node01 mode=maintainance:NoSchedule
+$ k run nginx2 --image=nginx:alpine
+$ k run v --image=busybox -- /bin/sh -c "sleep 30; touch /tmp/debug; sleep 30; rm /tmp/debug"
+$ k run nginx03  --image=nginx 
+$ k create deploy deploy01 --image=nginx --port=80 
+$ k set image deploy/deploy01 nginx=nginx:dev --record
+$ k rollout undo deploy deploy01
+$ k scale deployment --replicas=3 --record
+$ k create job dice --image=kodekloud/throw-dice
+$ k create cj cj1  --image=kodekloud/throw-dice --schedule="*/1 * * * *"
+$ k create deploy deploy02 --image=busybox 
+$ k create deploy nginx04 --image=nginx --replicas=3
+$ k create deploy redis04 --image=redis --replicas=3
+$ k run 

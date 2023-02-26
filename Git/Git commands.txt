@@ -1,0 +1,86 @@
+DevOps Git Commands
+----------------------------------------
+Open Visual Studio Code :
+1) source control > 3 dots > clone : "bitbucket URL"
+2) git checkout "branch name"
+3) once you go to the desire branch name now you have access to that perticular branch files and you can start editing it.
+4) Once you finish editing the,
+      > git add "file name"
+      > git commit -m "message"
+      > git push origin "branch name"
+---------------------------------------------
+git --version
+mkdir "name of folder to make"
+cd "name of folder to go inside"
+git init "to initialise git"
+git clone : to clone git repo on local
+git pull : to pull any new changes from git repo to local repo.
+touch "file name that we want to create .py, .txt ,.yml"
+gedit "file name with extension to edit the file"
+git add "file name to add in staging area into git"
+git add -A "to add multiple file at a same time"
+git status "shows file that we want to commit"
+git commit -m "message that we want to print of commit"
+git commit -a -m "to commit multiple files"
+git log "to see logs"
+git branch "branch name"
+git checkout -b <branch name> #"branch name that we want to go to or create branch from existing branch"  
+git tag <tag name> #To create tag 
+git tag -a v1.1 -m "This is a tag" #To create annoyed tag with message.
+git show v1.1 or git tag or git tag -l "v1.*". # To show tags.
+git push --tags or git push origin --tags  #Tp push all tags.
+git tag -d v1.0.  # To delete tag.
+git push origin -d v1.1 #To delete tag from remote repo. 
+git merge "branch name that we want to merge into but first go to master branch and do merge"
+git rebase master "from branch to master works same as merge" rebase works in linear way so that we get clean history.
+git rebase 1 "add all files into master as merge" rebase works in liner way
+
+
+------------------------------------------------------------------
+Above steps are for commiting file to local repository using GIT
+Now to deal with remote repository like GitHub or SVN.
+-------------------------------------------------------------------
+make repository in github and make it public.
+after making repo copy SSH command from github 
+-------------------------------------------------------------------
+go to git CLI
+------------------------------------------------------------------- 
+git remote add origin "SSH link that we copy from github include "" "
+
+This will add remote repo to local repo in local PC
+
+To pull repo into local repo
+
+git pull origin master
+
+To push this commits file to remote repo like on github
+
+git push origin master or different branch name that we want to upload changes into github.
+
+To push commits file into Github using SSH first generate SSH key
+
+ssh-keygen
+give name of file 
+
+
+After key is generated copy rsa key and go to github > setting > ssh>add key >save
+cat "file name of ssh that we geerated.pub"
+
+Goto git bash
+eval `ssh-agent`
+ssh-add "file name as private key like mikin"
+git clone "link from github ssh"
+
+ssh -T "ssh link fron github" now we are ready to push changes to github.
+------------------------
+Issues in GitHub 
+------------------------
+It is place to comment about project eg. Bug in code, error in file etc...
+
+-------------------------------
+To disable the SSL Certificate : git config --global http.sslVerify false
+----------------------------------
+To clone perticular branch
+git clone -b <branch> <remote_repo>
+
+-------------------------------------------------
