@@ -1,0 +1,23 @@
+# deploy GCP instances 
+instance_list:
+   - web_server1
+   - web_server2
+   - database_server
+
+machine_type: n1-standard-1 
+source_image: debian-7
+zone: us-central1-a
+project: test_project
+
+service_account_email: viral@gmail.com
+
+# mysql
+
+db_name: bobdata
+db_user: user1
+db_password: Soroman!
+
+
+
+
+

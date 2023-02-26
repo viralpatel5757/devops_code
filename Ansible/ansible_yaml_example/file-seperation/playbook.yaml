@@ -1,0 +1,38 @@
+# converting this : https://github.com/mmumshad/simple-webapp steps to playbook
+
+- name: deplou web application
+  host: db_and_web_server1,db_and_web_server2
+  task:
+    - name: Install all required dependencies
+      apt: name='{{item}}' state=installed
+      loop:
+       - python
+       - python-setuptools
+       - python-dev
+       - build-essential
+       - python-pip
+       - python-mysqldb
+
+    - include: tasks/deploy_db.yaml
+    - imclude: tasks/deploy_webapp.yaml   
+
+    
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,10 @@
+Steps to install apache web server
+
+ > install latest packege of httpd
+ > start and enabled httpd service
+ > install latest packege of firewalld
+ > start and enabled firewalld service
+ > permit http service at firewall
+ > create simple html webpage
+ > defining webserver name (ie. www.baps.example.com)
+ > update its entry in /etc/hosts file

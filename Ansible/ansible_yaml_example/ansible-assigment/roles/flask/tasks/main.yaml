@@ -1,0 +1,15 @@
+
+  - name: install flask and flask-mysql with pip
+    pip: name="{{ item }}" state=present
+    with_items:
+      - flask
+      - flask-mysql
+  
+  - name: copy source code  
+    git: 
+      repo: 'https://github.com/mmumshad/simple-webapp.git'
+      dest: /opt/simple-webapp
+  
+  - name: Start Web Server
+    shell: MYSQL_DATABASE_HOST={{ hostvars[groups['db_servers'][0]]['private_ip'] }} FLASK_APP=/opt/simple-webapp/app.py nohup flask run --host=0.0.0.0 --port=80 &
+    

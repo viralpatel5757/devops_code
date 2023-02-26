@@ -1,0 +1,2 @@
+ - include: deploy-gcp-instances.yml
+ - include: config_application.yml

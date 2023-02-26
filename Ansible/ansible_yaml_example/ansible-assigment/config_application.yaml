@@ -1,0 +1,18 @@
+---
+- name: setup the Database server
+  host: database_servers
+  become: yes
+  become_method: sudo
+  connection: ssh
+  roles:
+    - python
+    - mysql
+
+- name: setup the webserver 
+  host: web_servers
+  become: yes
+  become_method: sudo
+  connection: ssh
+  roles:
+    - python
+    - flask

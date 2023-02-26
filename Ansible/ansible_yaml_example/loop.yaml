@@ -1,0 +1,15 @@
+---
+ -
+  name: create users
+  host: localhost
+  tasks:
+   - user: name= '{{item.name}}'  userid='{{item.uid}}'
+     loop:
+       - name: joe
+         uid: 1010
+       - name: viral
+         uid: 1020  
+       - name: zeus
+         uid: 1055 
+       - name: ketos
+         uid: 1077     

@@ -1,0 +1,7 @@
+
+db_and_web_server1 ansible_host=192.168.1.6 ansible_ssh_pass=Passw0rd
+db_and_web_server2 ansible_host=192.168.1.15 ansible_ssh_pass=Passw0rd
+
+[db_and_web_servers]
+db_and_web_server1
+db_and_web_server2

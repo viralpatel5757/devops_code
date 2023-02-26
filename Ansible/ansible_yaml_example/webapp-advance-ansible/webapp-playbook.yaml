@@ -1,0 +1,72 @@
+# converting this : https://github.com/mmumshad/simple-webapp steps to playbook
+
+- name: deplou web application
+  host: db_and_web_servers
+  vars: 
+     db_name: employee_db
+     db_user: db_user
+     db_password: Passw0rd
+  task:
+    - name: Install all required dependencies
+      apt: name='{{item}}' state=installed
+      loop:
+       - python
+       - python-setuptools
+       - python-dev
+       - build-essential
+       - python-pip
+       - python-mysqldb
+
+    - name: Install and Configure Database  
+      apt: name='{{item}}' state:installed
+      loop:
+       - mysql-server
+       - mysql-client
+
+    - name:  Start Database Service
+      Service: name=mysql state=started enabled=yes
+
+    - name: create database 
+      mysql_db: 
+        name: '{{db_name}}'
+        state: present
+
+    - name: create database users
+      mysql_user:
+        name: '{{db_user}}'
+        password: '{{db_password}}'
+        priv: '*.*:ALL'
+        state: present
+
+    - name: Install Python Flask dependency
+      pip:
+        name: '{{item}}'
+        state: present
+      loop:
+        - flask
+        - flask-mysql
+
+    - name: copy source code  
+      copy: src=app.py dest=/opt/app.py 
+
+    - name: Start web server
+      shell: FLASK_APP=/opt/app.py nohup flask run --host=0.0.0.0 &
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

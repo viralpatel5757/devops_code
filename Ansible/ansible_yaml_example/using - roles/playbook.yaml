@@ -1,0 +1,8 @@
+# converting this : https://github.com/mmumshad/simple-webapp steps to playbook
+
+- name: deplou web application
+  host: db_and_web_server1,db_and_web_server2
+  roles:
+   - python 
+   - mysql_db
+   - flask_web

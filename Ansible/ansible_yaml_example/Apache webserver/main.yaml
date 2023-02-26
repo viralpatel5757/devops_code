@@ -1,0 +1,42 @@
+---
+- name:
+  hosts: webserver
+  become: 'true'
+  become_user: root
+  tasks:
+    - name: install latest packege of httpd 
+      yum : name=httpd  state=latest
+
+    - name: start and enabled httpd service
+      service: name=httpd state=started enabled=yes
+
+    - name: install latest packege of firewalld 
+      yum : name=firewalld  state=latest
+      
+    - name: start and enabled firewalld service
+      service: name=firewalld state=started enabled=yes 
+
+    - name: permit http service at firewall
+      firewalld:
+        service: https
+        permanent: true
+        state: enabled
+        immediate: yes
+
+    - name: create simple html webpage
+      copy: 
+        content: "Jay swaminarayan everyone"
+        dest: /var/www/html/index.html
+
+    - name:  defining webserver name
+      lineinfile:
+        path: /etc/httpd/conf/httpd.conf
+        line: servername is www.baps.example.com:80
+        insertafter: "#ServerName"
+
+    - name: update its entry in /etc/hosts file        
+      lineinfile:
+        path: /etc/hosts
+        line: 192.168.1.1 www.baps.example.com
+        
+
